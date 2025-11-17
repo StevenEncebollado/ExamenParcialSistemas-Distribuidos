@@ -1,0 +1,65 @@
+version: '3.8'
+services:
+  mongo1:
+    image: mongo:latest
+    container_name: mongo1
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-cluster
+  mongo2:
+    image: mongo:latest
+    container_name: mongo2
+    ports:
+      - "27018:27017"
+    networks:
+      - mongo-cluster
+  mongo3:
+    image: mongo:latest
+    container_name: mongo3
+    ports:
+      - "27019:27017"
+    networks:
+      - mongo-cluster
+  webapp1:
+    build: ../app
+    container_name: webapp1
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    networks:
+      - mongo-cluster
+  webapp2:
+    build: ../app
+    container_name: webapp2
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    networks:
+      - mongo-cluster
+  webapp3:
+    build: ../app
+    container_name: webapp3
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    networks:
+      - mongo-cluster
+  load-balancer:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - webapp1
+      - webapp2
+      - webapp3
+    networks:
+      - mongo-cluster
+networks:
+  mongo-cluster:
+    driver: bridge
