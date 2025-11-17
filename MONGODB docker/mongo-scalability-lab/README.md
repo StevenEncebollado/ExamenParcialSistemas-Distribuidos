@@ -22,7 +22,7 @@ Implementar una infraestructura básica escalable usando MongoDB en Docker y dem
 ### Paso 1: Clonar y Preparar el Entorno
 ```bash
 # Clonar el repositorio
-git clone https://github.com/StevenEncebollado/ExamenParcialSistemas-Distribuidos.git
+git clone https://github.com/StevenEncebollado/Simulaci-n-de-Sistema-Escalable.git
 
 # Entrar al directorio del proyecto
 cd mongo-scalability-lab
